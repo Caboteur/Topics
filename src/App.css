@@ -1,0 +1,45 @@
+@import url('https://fonts.googleapis.com/css2?family=Montserrat+Alternates:wght@300&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Alegreya&display=swap');
+
+.App {
+  text-align: center;
+}
+
+.App-logo {
+  height: 10vmin;
+  margin-top: 33px;
+}
+
+.App-header {
+  background-color: #ffffff;
+  min-height: 100vh;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  font-size: calc(10px + 2vmin);
+  color: white;
+}
+
+.App-link {
+  color: #61dafb;
+}
+
+.title{
+font-family: 'Montserrat Alternates', sans-serif;
+color:#518bfe;
+font-size: 20px;
+text-align: center;
+max-width: 602px;
+margin: auto;
+margin-top: 8%;
+}
+
+@keyframes App-logo-spin {
+  from {
+    transform: rotate(0deg);
+  }
+  to {
+    transform: rotate(360deg);
+  }
+}

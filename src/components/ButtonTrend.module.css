@@ -1,0 +1,24 @@
+
+.Button{
+  padding: 25px;
+      text-transform: uppercase;
+      background: #ffffff;
+      border: none;
+      box-sizing: border-box;
+      color: #5189fc;
+      padding: 32px;
+      font-family: 'Montserrat Alternates', sans-serif;
+      font-size: 13px;
+      line-height: 23px;
+      margin: 9px;
+      box-shadow: blueviolet;
+      border-radius: 3px;
+      font-weight: 400;
+      border: 2px solid #4c82ee;
+      padding: 10px;
+}
+
+.Button:hover{
+  background: #518bfe;
+    color: #ffffff;
+}
