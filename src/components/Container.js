@@ -18,26 +18,30 @@ class Container extends Component {
       value:"FR",
       display:"none",
       googleSearch:"tendances",
-      twitterSearch:"tendances,",
+      twitterSearch:"tendances",
+      youtubeSearch:"tendances",
       country:  ["FR","US","DE","GB","IT","BE","IN"]
     }
   }
 
   componentDidMount(){
-    this.News()
+    this.News();
+    wiki({ apiUrl: 'https://fr.wikipedia.org/w/api.php' })
+    .geoSearch(48.853847099999996, 2.4623418999999998, 10000)
+
+    .then(titles => console.log(titles));
   }
 
 
   async News(){
     const response= await fetch('/news-trend-'+this.state.value);
     const body = await response.json();
-    console.log(body)
     this.setState( {reponse:body})
   }
 
   handleChange (event){
     this.setState({value: event.target.value}, ()=>{
-    this.News();
+      this.News();
     })
 
   }
@@ -53,6 +57,7 @@ class Container extends Component {
     this.wikipedia(elem);
     this.googleSearch(elem);
     this.twitterSearch(elem);
+    this.youtubeSearch(elem);
     const element = document.getElementById(id)
     element.className=styles.articleContainerFull
     //  elemtn.classList.remove("styles.articleContainerFull")
@@ -61,7 +66,6 @@ class Container extends Component {
   wikipedia (data, err){
     wiki({ apiUrl: 'https://fr.wikipedia.org/w/api.php' })
     .find(data)
-      .then(page => console.log(page))
     .then(page => this.setState({wiki:page.raw.fullurl}))
   }
 
@@ -75,41 +79,48 @@ class Container extends Component {
     this.setState({twitterSearch:search})
   }
 
+  youtubeSearch(data){
+    const search = 'https://www.youtube.com/results?search_query='+data;
+    this.setState({youtubeSearch:search})
+  }
+
   render(props) {
 
     return (
       <div className={styles.Container}>
-      <div className={styles.selectContainer}>
-      <select  className={styles.selector} onChange={this.handleChange.bind(this)} value={this.state.value}>
+        <div className={styles.selectContainer}>
+          <select  className={styles.selector} onChange={this.handleChange.bind(this)} value={this.state.value}>
 
-      {this.state.country.map((country)=>
-       <option className={styles.options} value={country}>{country}</option>
+            {this.state.country.map((country, index)=>
+              <option key={index} className={styles.options} value={country}>{country}</option>
 
-      )}
-</select>
-
-      </div>
-      <div className={styles.dataConatainer}>
-      {
-        this.state.reponse.map((trend, index) =>
-        <div id={index} className={styles.articleContainer}>
-
-        <ButtonTrend id={index} click={this.handleClick.bind(this)} key={index} title={trend.topic.title.query}/>
-
-        <Viewer wiki={this.state.wiki}
-         googleSearch={this.state.googleSearch}
-         twitterSearch={this.state.twitterSearch}
-         display={this.state.display}
-         source={trend.topic.articles[0].source}
-         title={trend.topic.articles[0].title}
-         url={trend.topic.articles[0].url}
-         />
+            )}
+          </select>
 
         </div>
+        <div >
+          {
+            this.state.reponse.map((trend, index) =>
+            <div id={index} className={styles.articleContainer}>
 
-      )}
+              <ButtonTrend id={index} click={this.handleClick.bind(this)} key={index} title={trend.topic.title.query}/>
 
-      </div>
+              <Viewer wiki={this.state.wiki}
+                googleSearch={this.state.googleSearch}
+                twitterSearch={this.state.twitterSearch}
+                youtubeSearch={this.state.youtubeSearch}
+                display={this.state.display}
+                source={trend.topic.articles[0].source}
+                title={trend.topic.articles[0].title}
+                url={trend.topic.articles[0].url}
+                />
+
+            </div>
+
+          )}
+
+
+        </div>
 
 
 

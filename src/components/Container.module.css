@@ -1,5 +1,13 @@
+.dataConatainer{
+background:red;
+}
 
-.articles{
+.interbloc{
+  background: blue;
+  height: 25px;
+  display: grid;
+  margin: 9px;
+  padding: 10px;
 }
 
 .articleLink{

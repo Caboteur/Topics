@@ -10,6 +10,7 @@ class Viewer extends Component {
       <h1><a href={this.props.wiki}>{this.props.wiki}</a></h1>
       <h1><a href={this.props.googleSearch}>{this.props.googleSearch}</a></h1>
       <h1><a href={this.props.twitterSearch}>{this.props.twitterSearch}</a></h1>
+      <h1><a href={this.props.youtubeSearch}>{this.props.youtubeSearch}</a></h1>
 
       {this.props.url?   <div><h1><a href={this.props.url}> {this.props.title}</a></h1>
       <p>{this.props.url.source} </p> </div> : <h1></h1> }
