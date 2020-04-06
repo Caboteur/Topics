@@ -5,38 +5,46 @@ import axios from 'axios';
 import Datas from './Api/Api-request.js'
 import Viewer from './Viewer.js'
 import wiki from 'wikijs'
+import countries from './Api/countries.js'
+
+
 
 class Container extends Component {
   constructor(props) {
     super(props);
     this.state = {
       reponse:[],
-      reponseFR:[],
-      reponseUS:[],
-      reponseDE:[],
       wiki:"",
       value:"FR",
       display:"none",
       googleSearch:"tendances",
       twitterSearch:"tendances",
       youtubeSearch:"tendances",
-      country:  ["FR","US","DE","GB","IT","BE","IN"]
+      country:countries()
     }
   }
 
   componentDidMount(){
+    console.log(countries())
     this.News();
     wiki({ apiUrl: 'https://fr.wikipedia.org/w/api.php' })
-    .geoSearch(48.853847099999996, 2.4623418999999998, 10000)
+  //  .geoSearch(48.853847099999996, 2.4623418999999998, 10000)
 
-    .then(titles => console.log(titles));
+  //  .then(titles => console.log(titles));
   }
 
 
   async News(){
+    this.setState({ reponse: [] })
     const response= await fetch('/news-trend-'+this.state.value);
     const body = await response.json();
-    this.setState( {reponse:body})
+      console.log(body)
+   body.map((tab)=>{
+
+      if (tab.country  == this.state.value){
+        this.setState({ reponse: [...this.state.reponse, tab] }, console.log(this.state.reponse))
+      }
+    })
   }
 
   handleChange (event){
@@ -101,6 +109,7 @@ class Container extends Component {
         <div >
           {
             this.state.reponse.map((trend, index) =>
+
             <div id={index} className={styles.articleContainer}>
 
               <ButtonTrend id={index} click={this.handleClick.bind(this)} key={index} title={trend.topic.title.query}/>
