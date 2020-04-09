@@ -1,3 +1,4 @@
+
 import React, { Component } from 'react';
 import ButtonTrend from './ButtonTrend.js'
 import styles from './Container.module.css';
@@ -6,8 +7,8 @@ import Datas from './Api/Api-request.js'
 import Viewer from './Viewer.js'
 import wiki from 'wikijs'
 import countries from './Api/countries.js'
-
-
+import ApiWikipedia from './Api/Api-wikipedia.js'
+import wikiped from './Api/wikiped.js'
 
 class Container extends Component {
   constructor(props) {
@@ -41,7 +42,7 @@ class Container extends Component {
       console.log(body)
    body.map((tab)=>{
 
-      if (tab.country  == this.state.value){
+      if (tab.country  === this.state.value){
         this.setState({ reponse: [...this.state.reponse, tab] }, console.log(this.state.reponse))
       }
     })
@@ -55,27 +56,74 @@ class Container extends Component {
   }
 
   handleClick(e){
-    if (this.state.display=="none"){
+    if (this.state.display==="none"){
       this.setState({display:"inherit"});
     }else{
       this.setState({display:"none"});
     }
     const elem = e.target.innerHTML
     const id = e.target.id;
-    this.wikipedia(elem);
+    this.wiki(elem)
     this.googleSearch(elem);
     this.twitterSearch(elem);
     this.youtubeSearch(elem);
     const element = document.getElementById(id)
     element.className=styles.articleContainerFull
-    //  elemtn.classList.remove("styles.articleContainerFull")
+
   }
 
-  wikipedia (data, err){
-    wiki({ apiUrl: 'https://fr.wikipedia.org/w/api.php' })
-    .find(data)
-    .then(page => this.setState({wiki:page.raw.fullurl}))
-  }
+   wiki(data){
+     {
+
+       const wikiSearchReturnValues = []
+
+         var url = "https://fr.wikipedia.org/w/api.php";
+         var params = {
+           action: 'query',
+           list: 'search',
+           srsearch: data,
+           format: 'json'
+         };
+
+         url = url + '?origin=*';
+         Object.keys(params).forEach((key) => {
+           url += "&" + key + "=" + params[key];
+         });
+
+         fetch(url)
+           .then(
+             (response) =>{
+               return response.json();
+             }
+           )
+           .then(
+             (response) =>{
+               for (var key in response.query.search) {
+                wikiSearchReturnValues.push({
+                   queryResultPageTitle: response.query.search[key].title,
+                 });
+               }
+             }
+           )
+
+           .then(
+             (response)=> {
+
+                if (wikiSearchReturnValues[0] != undefined){
+                 let title = wikiSearchReturnValues[0].queryResultPageTitle;
+
+                  this.setState({wiki:title}, ()=>console.log(title));
+                  wiki({ apiUrl: 'https://fr.wikipedia.org/w/api.php' })
+                    .find(title)
+                      .then(page => this.setState({wikiurl:page.raw.fullurl}), ()=>console.log(this.state.wikiurl))
+               }else {
+                 console.log("nop")
+               }
+             }
+           )
+
+       }
+   }
 
   googleSearch(data){
     const search = 'https://www.google.com/search?q='+data;
@@ -114,7 +162,7 @@ class Container extends Component {
 
               <ButtonTrend id={index} click={this.handleClick.bind(this)} key={index} title={trend.topic.title.query}/>
 
-              <Viewer wiki={this.state.wiki}
+              <Viewer wiki={this.state.wikiurl}
                 googleSearch={this.state.googleSearch}
                 twitterSearch={this.state.twitterSearch}
                 youtubeSearch={this.state.youtubeSearch}
@@ -127,6 +175,7 @@ class Container extends Component {
             </div>
 
           )}
+
 
 
         </div>

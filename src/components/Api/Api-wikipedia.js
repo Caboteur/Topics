@@ -42,7 +42,7 @@ class ApiWikipedia extends React.Component {
       )
       .then(
         function (response) {
-          // console.log(response);
+
 
           for (var key in response.query.search) {
             pointerToThis.state.wikiSearchReturnValues.push({
@@ -98,7 +98,7 @@ class ApiWikipedia extends React.Component {
       <div className="App">
         <h1>Wikipedia Search Engine</h1>
         <form action="">
-          <input type="text" value={this.state.WikiSearchTerms || ''} onChange={this.changeWikiSearchTerms} placeholder={this.state.search} />
+          <input id="inutt" value={this.state.wikiSearchTerms} type="text" value={this.state.WikiSearchTerms || ''} onChange={this.changeWikiSearchTerms} placeholder={this.state.search} />
           <button type='submit' onClick={this.useWikiSearchEngine}>Search</button>
         </form>
 
