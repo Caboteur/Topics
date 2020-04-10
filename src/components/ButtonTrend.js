@@ -6,6 +6,7 @@ class ButtonTrend extends Component {
   render() {
     return (
 
+
       <div id={this.props.id} onClick={this.props.click} className={styles.Button}>
         {this.props.title}
       </div>

@@ -4,6 +4,7 @@ const pino = require('express-pino-logger')();
 const googleTrends = require('google-trends-api');
 const fetch = require('node-fetch');
 var varname = require('varname');
+const translate = require('google-translate-open-api').default;
 
 const app = express();
 app.use(bodyParser.urlencoded({ extended: false }));
@@ -15,6 +16,9 @@ var length = -1;
 var tab =[]
 
 function googleCall(coutry) {
+
+
+
 
   googleTrends.dailyTrends({
     geo: nation,
@@ -63,8 +67,15 @@ function ApiCall(){
 ApiCall();
 
 
+async function asyncCall() {
 
 
+console.log("okoko")
+  app.get('/trans', (req, res) => res.send(data))
+
+}
+
+asyncCall();
 
 //newsCall();
 //setInterval(function(){newsCall()}, 3600000);

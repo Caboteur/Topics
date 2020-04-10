@@ -8,7 +8,7 @@ import Viewer from './Viewer.js'
 import wiki from 'wikijs'
 import countries from './Api/countries.js'
 import ApiWikipedia from './Api/Api-wikipedia.js'
-import wikiped from './Api/wikiped.js'
+ import translate from '@vitalets/google-translate-api';
 
 class Container extends Component {
   constructor(props) {
@@ -32,18 +32,35 @@ class Container extends Component {
   //  .geoSearch(48.853847099999996, 2.4623418999999998, 10000)
 
   //  .then(titles => console.log(titles));
+ this.as();
   }
+
+
+     as(){
+
+
+translate('Ik spreek Engels', {to: 'en'}).then(res => {
+    console.log(res.text);
+    //=> I speak English
+    console.log(res.from.language.iso);
+    //=> nl
+}).catch(err => {
+    console.error(err);
+});
+     }
 
 
   async News(){
     this.setState({ reponse: [] })
+    const responseq= await fetch('/trans');
+    console.log(responseq)
     const response= await fetch('/news-trend-'+this.state.value);
     const body = await response.json();
       console.log(body)
    body.map((tab)=>{
 
       if (tab.country  === this.state.value){
-        this.setState({ reponse: [...this.state.reponse, tab] }, console.log(this.state.reponse))
+        this.setState({ reponse: [...this.state.reponse, tab] })
       }
     })
   }
