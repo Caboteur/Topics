@@ -67,16 +67,6 @@ function ApiCall(){
 ApiCall();
 
 
-async function asyncCall() {
-
-
-console.log("okoko")
-  app.get('/trans', (req, res) => res.send(data))
-
-}
-
-asyncCall();
-
 //newsCall();
 //setInterval(function(){newsCall()}, 3600000);
 

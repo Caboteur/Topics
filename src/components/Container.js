@@ -8,7 +8,8 @@ import Viewer from './Viewer.js'
 import wiki from 'wikijs'
 import countries from './Api/countries.js'
 import ApiWikipedia from './Api/Api-wikipedia.js'
- import translate from '@vitalets/google-translate-api';
+import { googleTranslate } from "./Api/googleTranslate.js";
+
 
 class Container extends Component {
   constructor(props) {
@@ -18,6 +19,8 @@ class Container extends Component {
       wiki:"",
       value:"FR",
       display:"none",
+      displaytrad:"none",
+      trad:false,
       googleSearch:"tendances",
       twitterSearch:"tendances",
       youtubeSearch:"tendances",
@@ -32,31 +35,17 @@ class Container extends Component {
   //  .geoSearch(48.853847099999996, 2.4623418999999998, 10000)
 
   //  .then(titles => console.log(titles));
- this.as();
+
   }
 
 
-     as(){
-
-
-translate('Ik spreek Engels', {to: 'en'}).then(res => {
-    console.log(res.text);
-    //=> I speak English
-    console.log(res.from.language.iso);
-    //=> nl
-}).catch(err => {
-    console.error(err);
-});
-     }
 
 
   async News(){
     this.setState({ reponse: [] })
-    const responseq= await fetch('/trans');
-    console.log(responseq)
     const response= await fetch('/news-trend-'+this.state.value);
     const body = await response.json();
-      console.log(body)
+
    body.map((tab)=>{
 
       if (tab.country  === this.state.value){
@@ -68,7 +57,15 @@ translate('Ik spreek Engels', {to: 'en'}).then(res => {
   handleChange (event){
     this.setState({value: event.target.value}, ()=>{
       this.News();
+      if(this.state.value === "FR"){
+          this.setState({displaytrad: "none"})
+          console.log("trad")
+      }else{
+        this.setState({displaytrad: "inherit"})
+        console.log("pas trad")
+      }
     })
+
 
   }
 
@@ -78,7 +75,7 @@ translate('Ik spreek Engels', {to: 'en'}).then(res => {
     }else{
       this.setState({display:"none"});
     }
-    const elem = e.target.innerHTML
+    const elem = e.target.getAttribute('name')
     const id = e.target.id;
     this.wiki(elem)
     this.googleSearch(elem);
@@ -157,6 +154,15 @@ translate('Ik spreek Engels', {to: 'en'}).then(res => {
     this.setState({youtubeSearch:search})
   }
 
+  translate(){
+    if(this.state.trad === false){
+        this.setState({trad:true})
+    }else{
+      this.setState({trad:false})
+    }
+
+  }
+
   render(props) {
 
     return (
@@ -165,8 +171,7 @@ translate('Ik spreek Engels', {to: 'en'}).then(res => {
           <select  className={styles.selector} onChange={this.handleChange.bind(this)} value={this.state.value}>
 
             {this.state.country.map((country, index)=>
-              <option key={index} className={styles.options} value={country}>{country}</option>
-
+              <option key={index} className={styles.options} value={country.id}>{country.name}</option>
             )}
           </select>
 
@@ -177,9 +182,12 @@ translate('Ik spreek Engels', {to: 'en'}).then(res => {
 
             <div id={index} className={styles.articleContainer}>
 
-              <ButtonTrend id={index} click={this.handleClick.bind(this)} key={index} title={trend.topic.title.query}/>
+              <ButtonTrend id={index} trad={this.state.trad} value={trend.topic.title.query} click={this.handleClick.bind(this)} key={index} title={trend.topic.title.query}/>
 
-              <Viewer wiki={this.state.wikiurl}
+              <Viewer
+                topics={trend.topic.title.query}
+                wikiurl={this.state.wikiurl}
+                wikititle={this.state.wiki}
                 googleSearch={this.state.googleSearch}
                 twitterSearch={this.state.twitterSearch}
                 youtubeSearch={this.state.youtubeSearch}
@@ -193,7 +201,7 @@ translate('Ik spreek Engels', {to: 'en'}).then(res => {
 
           )}
 
-
+          <button className={styles.selector} style={{display:this.state.displaytrad}} onClick={this.translate.bind(this)}>Traduire</button>
 
         </div>
 
