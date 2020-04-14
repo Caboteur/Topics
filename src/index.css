@@ -1,3 +1,8 @@
+@font-face {
+  font-family: 'acaslonpro-regular';
+  src: local('acaslonpro-regular'), url(./fonts/acaslonpro-regular.otf) format('otf');
+}
+
 body {
   margin: 0;
   padding: 0;

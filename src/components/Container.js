@@ -1,4 +1,3 @@
-
 import React, { Component } from 'react';
 import ButtonTrend from './ButtonTrend.js'
 import styles from './Container.module.css';
@@ -31,14 +30,23 @@ class Container extends Component {
   componentDidMount(){
     console.log(countries())
     this.News();
+    function generateRandomLatLng()
+{
+    var num = Math.random()*180;
+    var posorneg = Math.floor(Math.random());
+    if (posorneg == 0)
+    {
+        num = num * -1;
+    }
+    return num;
+}
+  console.log(generateRandomLatLng());
     wiki({ apiUrl: 'https://fr.wikipedia.org/w/api.php' })
-  //  .geoSearch(48.853847099999996, 2.4623418999999998, 10000)
+  .geoSearch(3.69217,  -76.25386, 10000)
 
-  //  .then(titles => console.log(titles));
+   .then(titles => console.log(titles));
 
   }
-
-
 
 
   async News(){
