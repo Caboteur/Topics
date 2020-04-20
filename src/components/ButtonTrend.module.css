@@ -1,24 +1,25 @@
 
 .Button{
-  padding: 25px;
-      text-transform: uppercase;
-      background: #ffffff;
-      border: none;
-      box-sizing: border-box;
-      color: #5189fc;
-      padding: 32px;
-      font-family: 'acaslonpro-regular', sans-serif;
-      font-size: 13px;
-      line-height: 23px;
-      margin: 9px;
-      box-shadow: blueviolet;
-      border-radius: 3px;
-      font-weight: 400;
-      border: 2px solid #4c82ee;
-      padding: 10px;
+    background: #EBECF0;
+    border: none;
+    box-sizing: border-box;
+    color: #5189fc;
+    padding: 32px;
+    font-family: 'acaslonpro-regular', sans-serif;
+    line-height: 23px;
+    margin: 20px;
+    box-shadow: blueviolet;
+    border-radius: 3px;
+    font-weight: 400;
+    font-size: 15px;
+    border: none;
+    padding: 13px 36px;
+    border-radius: 40px;
+    color: #303295;
+    box-shadow: 7px 7px 15px rgba(55, 84, 170, .15), -7px -7px 20px rgba(255, 255, 255, 1), inset 0px 0px 4px rgba(255, 255, 255, .2), inset 7px 7px 15px rgba(55, 84, 170, 0), inset -7px -7px 20px rgba(255, 255, 255, 0), 0px 0px 4px rgba(255, 255, 255, 0) !important;
+    transition: box-shadow .25s ease !important;
 }
 
 .Button:hover{
-  background: #518bfe;
-    color: #ffffff;
+  box-shadow: 7px 7px 15px rgba(55, 84, 170, .15), -7px -7px 20px rgba(255, 255, 255, 1), inset 0px 0px 4px rgba(255, 255, 255, 0), inset 7px 7px 15px rgba(55, 84, 170, .15), inset -7px -7px 20px rgba(255, 255, 255, 1), 0px 0px 4px rgba(255, 255, 255, .2) !important;
 }

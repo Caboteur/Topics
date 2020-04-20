@@ -5,36 +5,46 @@ import wikipedia from './icon/wikipedia.svg';
 import twitter from './icon/twitter.svg';
 import youtube from './icon/youtube.svg';
 import google from './icon/google.svg';
+import exit from './icon/exit.svg';
 
 class Viewer extends Component {
 
   render() {
     return (
-      <div className={styles.articles} style={{display:this.props.display}}>
-
-        <h1>Topics:{this.props.topics}</h1>
-
-
+      <div id={this.props.id} className={styles.articles} style={{display:this.props.display}}>
+        <div className={styles.headerContainer}>
+       <img className={styles.exitButton} src={exit} onClick={this.props.click}/>
+        <h1 className={styles.title}>{this.props.topics}</h1>
+        </div>
      <div>
+       <a href={this.props.wikiurl}>
        <img className={styles.icon} src={wikipedia} />
-       <h2 className={styles.article}><a href={this.props.wikiurl}>{this.props.wikititle}</a></h2>
+       <h2 className={styles.article}></h2>
+       </a>
      </div>
      <div>
+       <a href={this.props.googleSearch}>
        <img className={styles.icon} src={google} />
-       <h2 className={styles.article}><a href={this.props.googleSearch}>Rechercher sur google</a></h2>
+       <h2 className={styles.article}></h2>
+       </a>
      </div>
      <div>
+       <a href={this.props.twitterSearch}>
        <img className={styles.icon} src={twitter} />
-       <h2 className={styles.article}><a href={this.props.twitterSearch}>Rechercher sur twitter</a></h2>
+       <h2 className={styles.article}></h2>
+       </a>
      </div>
-     <div>
+     <div><a href={this.props.youtubeSearch}>
        <img className={styles.icon} src={youtube} />
-       <h2 className={styles.article}><a href={this.props.youtubeSearch}>Rechercher sur youtube</a></h2>
+       <h2 className={styles.article}></h2>
+       </a>
      </div>
      <div>
+       <a href={this.props.url}>
        <img className={styles.icon} src={news} />
-       {this.props.url?   <div><h2 className={styles.article}><a href={this.props.url}> {this.props.title}</a></h2>
+       {this.props.url?   <div><h2 className={styles.article}> {this.props.title}</h2>
      <p>{this.props.url.source} </p> </div> : <h2></h2> }
+       </a>
      </div>
 
 

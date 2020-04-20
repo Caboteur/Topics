@@ -1,12 +1,40 @@
 .article a{
-font-size: 25px;
+font-size: 15px;
 text-decoration: none;
-color: black;
+color:#29388c;
 font-family: 'Montserrat Alternates', sans-serif;
 }
 
 .icon{
-  width: 7%;
-  float: left;
+  width: 5%;
   margin-left: 20px;
+  height: 10vmin;
+  font-size: 20px;
+    border: none;
+    padding: 2px 16px;
+    border-radius: 9px;
+    color: #6D7587;
+    box-shadow: 7px 7px 15px rgba(55, 84, 170, .15), -7px -7px 20px rgba(255, 255, 255, 1), inset 0px 0px 4px rgba(255, 255, 255, .2), inset 7px 7px 15px rgba(55, 84, 170, 0), inset -7px -7px 20px rgba(255, 255, 255, 0), 0px 0px 4px rgba(255, 255, 255, 0) !important;
+    transition: box-shadow .25s ease !important;
+}
+
+.icon:hover{
+  box-shadow: 7px 7px 15px rgba(55, 84, 170, .15), -7px -7px 20px rgba(255, 255, 255, 1), inset 0px 0px 4px rgba(255, 255, 255, 0), inset 7px 7px 15px rgba(55, 84, 170, .15), inset -7px -7px 20px rgba(255, 255, 255, 1), 0px 0px 4px rgba(255, 255, 255, .2) !important;
+
+}
+
+.exitButton{
+  width: 4%;
+float: left;
+display: inline-block;
+}
+
+.title{
+  color: #29388c;
+  font-size: 20px;
+  font-family: 'Montserrat Alternates', sans-serif;
+}
+
+.headerContainer{
+  margin: 25px;
 }

@@ -8,17 +8,20 @@ import wiki from 'wikijs'
 import countries from './Api/countries.js'
 import ApiWikipedia from './Api/Api-wikipedia.js'
 import { googleTranslate } from "./Api/googleTranslate.js";
-
+import Preloader from './Preloader.js'
 
 class Container extends Component {
   constructor(props) {
     super(props);
     this.state = {
       reponse:[],
+      id:"",
       wiki:"",
       value:"FR",
       display:"none",
       displaytrad:"none",
+      displayButton:"inherit",
+      loading:"inherit",
       trad:false,
       googleSearch:"tendances",
       twitterSearch:"tendances",
@@ -30,22 +33,6 @@ class Container extends Component {
   componentDidMount(){
     console.log(countries())
     this.News();
-    function generateRandomLatLng()
-{
-    var num = Math.random()*180;
-    var posorneg = Math.floor(Math.random());
-    if (posorneg == 0)
-    {
-        num = num * -1;
-    }
-    return num;
-}
-  console.log(generateRandomLatLng());
-    wiki({ apiUrl: 'https://fr.wikipedia.org/w/api.php' })
-  .geoSearch(3.69217,  -76.25386, 10000)
-
-   .then(titles => console.log(titles));
-
   }
 
 
@@ -57,6 +44,7 @@ class Container extends Component {
    body.map((tab)=>{
 
       if (tab.country  === this.state.value){
+        this.setState({ loading:"none" }, console.log(this.state.loading))
         this.setState({ reponse: [...this.state.reponse, tab] })
       }
     })
@@ -85,12 +73,20 @@ class Container extends Component {
     }
     const elem = e.target.getAttribute('name')
     const id = e.target.id;
+
+    this.setState({id:id});
     this.wiki(elem)
     this.googleSearch(elem);
     this.twitterSearch(elem);
     this.youtubeSearch(elem);
-    const element = document.getElementById(id)
+    const element = document.getElementById("button" + id)
     element.className=styles.articleContainerFull
+  }
+
+  handleClickoff(e){
+  const element = document.getElementById("button" + this.state.id)
+  this.setState({display:"none"});
+  element.style.display="none";
 
   }
 
@@ -190,9 +186,12 @@ class Container extends Component {
 
             <div id={index} className={styles.articleContainer}>
 
-              <ButtonTrend id={index} trad={this.state.trad} value={trend.topic.title.query} click={this.handleClick.bind(this)} key={index} title={trend.topic.title.query}/>
+              <ButtonTrend id={index} display={this.state.displayButton} trad={this.state.trad} value={trend.topic.title.query} click={this.handleClick.bind(this)} key={index} title={trend.topic.title.query}/>
 
               <Viewer
+                id={"button" + index}
+                key={"button" + index}
+                click={this.handleClickoff.bind(this)}
                 topics={trend.topic.title.query}
                 wikiurl={this.state.wikiurl}
                 wikititle={this.state.wiki}
@@ -209,11 +208,12 @@ class Container extends Component {
 
           )}
 
+
           <button className={styles.selector} style={{display:this.state.displaytrad}} onClick={this.translate.bind(this)}>Traduire</button>
 
         </div>
 
-
+          <Preloader display={this.state.loading} />
 
       </div>
     );

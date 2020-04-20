@@ -27,7 +27,7 @@ class ButtonTrend extends Component {
     return (
 
 
-      <div id={this.props.id} name={this.props.value} onClick={this.props.click} className={styles.Button}>
+      <div id={this.props.id} style={{display:this.props.display}} name={this.props.value} onClick={this.props.click} className={styles.Button}>
         {this.props.trad == true? this.state.title : this.props.value}
       </div>
 
